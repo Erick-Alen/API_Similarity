@@ -1,12 +1,13 @@
 import { cn } from '@/lib/utils'
-import { HTMLAttributes, forwardRef } from 'react'
+import { FC } from 'react'
+import { HTMLAttributes } from 'react'
 import { VariantProps, cva} from 'class-variance-authority'
 
 
 
 const headingVariants = cva(
   `text-black dark:text-white text-center lg:text-left
-  font-extrabold leading-tight tracking`, {
+  font-extrabold leading-tight tracking-tighter`, {
   variants: {
     size: {
       default: 'text-4xl md:text-5xl lg:text-6xl',
@@ -19,24 +20,21 @@ const headingVariants = cva(
   }
 })
 
-interface LargeHeadingProps extends HTMLAttributes<HTMLHeadingElement>,
-  VariantProps <typeof headingVariants> {
+interface LargeHeadingProps
+  extends HTMLAttributes<HTMLHeadingElement>,
+    VariantProps<typeof headingVariants> { }
 
-}
-
-const Heading = forwardRef<HTMLHeadingElement, LargeHeadingProps>(({
-  className, size, children, ...props
-}, ref) => {
+const Heading: FC<LargeHeadingProps> = ({
+  children, className, size, ...props
+}) => {
   return (
-    <h1 ref={ref} {...props} className={cn(headingVariants({ size, className }))}
+    <h1 {...props} className={cn(headingVariants({ size, className }))}
     >
       {children}
 
     </h1>
-    )
-  }
-)
+  )
+}
 
 //debugging
-Heading.displayName = 'Heading'
 export default Heading
